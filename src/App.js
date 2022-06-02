@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState} from 'react';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+const ENDPOINT_URL = "https://jsonplaceholder.typicode.com/comments"
+
+ function App() {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () =>{
+      setLoading(true);
+      try {
+        const {data: response} = await axios.get(`${ENDPOINT_URL}`);
+        setData(response);
+        //console.log("The response is -> " + JSON.stringify(response) + " <-") //for debug
+      } catch (error) {
+        console.error(error.message);
+      }
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+return (
+  <div>
+  {loading && <div>Loading</div>}
+  {!loading && (
+    <div>
+      <h2>Doing stuff with data</h2>
+      <ul>
+      {data.map(item => (
+            <li key={item.postId}>{item.postId}  {item.body}</li>
+          ))}
+      </ul>      
     </div>
-  );
-}
+  )}
+  </div>
+)
+};
 
 export default App;
+
