@@ -2,9 +2,9 @@ import React, { useEffect, useState} from 'react';
 import axios from 'axios';
 
 
-const ENDPOINT_URL = "https://jsonplaceholder.typicode.com/comments"
+const ENDPOINT_URL = "http://localhost:5000/video/video1"
 
- function App() {
+function App() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([])
 
@@ -30,9 +30,8 @@ return (
     <div>
       <h2>Doing stuff with data</h2>
       <ul>
-      {data.map(item => (
-            <li key={item.postId}>{item.postId}  {item.body}</li>
-          ))}
+
+          {data.title}
       </ul>      
     </div>
   )}
